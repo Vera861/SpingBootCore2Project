@@ -1,9 +1,8 @@
-server:
-  port: 8081
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/project
     username: postgres
     password: 123
   liquibase:
-      enabled: false
+    change-log: classpath:db/changelog-master.xml
