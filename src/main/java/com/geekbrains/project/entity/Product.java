@@ -1,29 +1,37 @@
 package com.geekbrains.project.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-
+@Data
 @Entity
+@Table(name = "product")
 public class Product {
     @Id
-    private UUID product_id;
-
-    private String title_prod;
+    @Column(name = "product_id")
+    private UUID id;
+    @Column(name = "title_prod")
+    private String title;
+    @Column(name = "price")
     private BigDecimal price;
+    @Column(name = "count")
     private int count;
     @ManyToOne
-    @JoinColumn(name = "created_by")
-    private Person createdBy;
+    @JoinColumn(name = "created")
+    private Person person;
+    @Column(name = "vendor_code")
     private String vendorCode;
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @PrePersist
     public void init() {
-        if(this.product_id == null) {
-            this.product_id = UUID.randomUUID();
+        if (this.id == null) {
+            this.id = UUID.randomUUID();
         }
 
         this.createdAt = LocalDateTime.now();
@@ -38,20 +46,20 @@ public class Product {
     }
 
     public UUID getId() {
-        return product_id;
+        return id;
     }
 
     public Product setId(UUID product_id) {
-        this.product_id = product_id;
+        this.id = product_id;
         return this;
     }
 
     public String getName() {
-        return title_prod;
+        return title;
     }
 
-    public Product setName(String title_prod) {
-        this.title_prod = title_prod;
+    public Product setName(String title) {
+        this.title = title;
         return this;
     }
 
@@ -74,11 +82,11 @@ public class Product {
     }
 
     public Person getCreatedBy() {
-        return createdBy;
+        return person;
     }
 
-    public Product setCreatedBy(Person createdBy) {
-        this.createdBy = createdBy;
+    public Product setCreatedBy(Person person) {
+        this.person = person;
         return this;
     }
 

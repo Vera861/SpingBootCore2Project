@@ -1,6 +1,6 @@
 package com.geekbrains.project.repository;
 
-import com.geekbrains.entity.Product;
+import com.geekbrains.project.entity.Product;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

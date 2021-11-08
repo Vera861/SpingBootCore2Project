@@ -14,6 +14,8 @@ import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.Route;
 
+import java.util.List;
+
 @Route("main")
 public class MainView extends VerticalLayout {
     private final Grid<Product> productGrid = new Grid<>(Product.class);
@@ -27,19 +29,19 @@ public class MainView extends VerticalLayout {
     }
 
     private void initPage() {
-        var cartLayout = initCartButton();
+        HorizontalLayout cartLayout = initCartButton();
         initProductGrid();
 
         add(productGrid, cartLayout);
     }
 
     private HorizontalLayout initCartButton() {
-        var addToCardButton = new Button("Добавить в корзину", event -> {
+        Button addToCardButton = new Button("Добавить в корзину", event -> {
             //TODO: Сохранение в бд какому-либо пользователю
             Notification.show("Товар успешно добавлен в корзину");
         });
 
-        var toCartButton = new Button("Корзина", event -> {
+        Button toCartButton = new Button("Корзина", event -> {
             UI.getCurrent().navigate("cart");
         });
 
@@ -47,7 +49,7 @@ public class MainView extends VerticalLayout {
     }
 
     private void initProductGrid() {
-        var products = productService.getAll();
+        List<Product> products = productService.getAll();
 
         productGrid.setItems(products);
         productGrid.setColumns("name", "price", "count", "vendorCode");
@@ -58,13 +60,13 @@ public class MainView extends VerticalLayout {
         productGrid.setDataProvider(dataProvider);
 
         productGrid.addColumn(new ComponentRenderer<>(item -> {
-            var plusButton = new Button("+", i -> {
+            Button plusButton = new Button("+", i -> {
                 item.incrementCount();
                 productService.save(item);
                 productGrid.getDataProvider().refreshItem(item);
             });
 
-            var minusButton = new Button("-", i -> {
+            Button minusButton = new Button("-", i -> {
                 item.decreaseCount();
                 productService.save(item);
                 productGrid.getDataProvider().refreshItem(item);

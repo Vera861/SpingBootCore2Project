@@ -4,10 +4,7 @@ import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -18,14 +15,18 @@ import java.util.UUID;
 @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class Cart {
     @Id
+    @Column(name = "cart_id")
     private UUID cart_id;
 
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @ManyToOne
+    @JoinColumn(name = "person_id")
     private Person person;
 
     @Type(type = "jsonb")
+    @Column(name = "products")
     private List<InnerProduct> products;
 
     @PrePersist
