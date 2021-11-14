@@ -1,9 +1,11 @@
 server:
-  port: 8081
+  port: 8080
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/project
+    url: jdbc:postgresql://localhost:5432/e_shop
     username: postgres
     password: 123
+  jpa:
+    show-sql: true
   liquibase:
-      enabled: false
+    change-log: classpath:db/changelog-master.xml

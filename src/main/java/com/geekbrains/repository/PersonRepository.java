@@ -1,9 +1,10 @@
-package com.geekbrains.project.repository;
+package com.geekbrains.repository;
 
-import com.geekbrains.project.entity.Person;
+import com.geekbrains.entity.Person;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.UUID;
 
 public interface PersonRepository extends CrudRepository<Person, UUID> {
+    Person findPersonByFirstName(String name);
 }

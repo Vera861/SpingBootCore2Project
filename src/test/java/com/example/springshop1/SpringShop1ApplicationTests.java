@@ -1,10 +1,10 @@
-package com.geekbrains.project;
+package com.example.springshop1;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ProjectApplicationTests {
+class SpringShop1ApplicationTests {
 
     @Test
     void contextLoads() {

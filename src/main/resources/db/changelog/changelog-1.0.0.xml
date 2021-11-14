@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="init" author="v.eremin">
+        <createTable tableName="person">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="first_name" type="varchar(128)"/>
+            <column name="last_name" type="varchar(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="patronymic" type="varchar(128)"/>
+            <column name="phone" type="varchar(14)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="varchar(1024)"/>
+            <column name="balance" type="numeric(19,2)"/>
+            <column name="role" type="varchar(16)"/>
+            <column name="email" type="varchar(256)"/>
+            <column name="created_at" type="timestamp without timezone">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="init-1" author="v.eremin">
+        <createTable tableName="category">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp without timezone">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="product">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(128)"/>
+            <column name="price" type="numeric(19,2)"/>
+            <column name="count" type="int"/>
+            <column name="created" type="uuid">
+                <constraints nullable="false" foreignKeyName="user_id" references="person(id)"/>
+            </column>
+            <column name="vendor_code" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp without timezone">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="init-2" author="k.semenov">
+        <createTable tableName="cart">
+            <column name="cart_id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="created_at" type="datetime"/>
+            <column name="user_id" type="uuid">
+                <constraints referencedTableName="person" referencedColumnNames="id" foreignKeyName="fkUserId"/>
+            </column>
+            <column name="products" type="jsonb"/>
+        </createTable>
+
+        <createTable tableName="orders">
+            <column name="order_id" type="uuid">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="cart_id" type="uuid">
+                <constraints referencedColumnNames="cart_id" referencedTableName="cart" foreignKeyName="fkCartId"/>
+            </column>
+            <column name="number" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="delivery_address" type="varchar(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="datetime"/>
+        </createTable>
+
+        <addColumn tableName="person">
+            <column name="login" type="varchar(255)"/>
+            <column name="password" type="varchar(255)"/>
+        </addColumn>
+
+    </changeSet>
+
+</databaseChangeLog>
