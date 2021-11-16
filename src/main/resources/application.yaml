@@ -1,0 +1,11 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/e_shop
+    username: postgres
+    password: 123
+  jpa:
+    show-sql: true
+  liquibase:
+    change-log: classpat h:db/changelog-master.xml
